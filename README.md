@@ -3,8 +3,10 @@
 
 This is where I will store the code files for my website. On my website will be a bunch of random stuff I fancied making, from games to illustrations.
 
+Site is hosted at (https://rearedcape.herokuapp.com/).
+
 The following is a list of things I have added or want to add:
-- [X] _Wobbly circle with noise_
+- [x] _Wobbly circle with noise_
 - [ ] _Sierpinski Triangle_
 - [ ] _Circle packing_
 - [ ] _Marchnig squares algorithm_
