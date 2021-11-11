@@ -1,7 +1,7 @@
 {
   "name": "website",
   "version": "1.0.0",
-  "description": "My random site",
+  "description": "My website of random things",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/RearedCape8319/website.git"
   },
+  "keywords": [
+    "Random"
+  ],
   "author": "Matthew Cockcroft",
   "license": "MIT",
   "bugs": {
