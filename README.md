@@ -13,4 +13,5 @@ The following is a list of things I have added or want to add:
 
 The project was created using the following:
 - **Node.js** (https://nodejs.org)
+- **Express** (https://expressjs.com/)
 - **P5.js** (https://p5js.org/)

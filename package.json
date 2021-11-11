@@ -1,0 +1,22 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "My random site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RearedCape8319/website.git"
+  },
+  "author": "Matthew Cockcroft",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RearedCape8319/website/issues"
+  },
+  "homepage": "https://github.com/RearedCape8319/website#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
