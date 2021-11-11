@@ -1,0 +1,81 @@
+/* The body can justst be a dark background, each added part will be brighter */
+body {
+  background-color: #2A1B3D;
+}
+
+
+/* The header will stand out */
+header {
+  background-color: #D83F87;
+  color: #FFFFFF;
+  text-align: center;
+  height: 80px;
+  line-height: 80px;
+  font-size: 30px;
+  text-shadow: 5px 3px 3px #2A1B3D;
+}
+
+
+/* The navigation bar will be less vivid but still stand out */
+nav {
+  background-color: #8265A7;
+  color: #FFFFFF;
+  border-style: solid;
+  border-width: 3px 0px 0px 0px;
+  border-color: #A4B3B6;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  font-size: 22px;
+  text-shadow: 2px 1px 1px #2A1B3D;
+}
+
+
+/* The side menu will be the same colour as the main area */
+aside {
+  background-color: #44318D;
+  color: #A4B3B6;
+  border-style: solid;
+  border-width: 3px 3px 0px 0px;
+  border-color: #A4B3B6;
+  text-align: center;
+  width: 20vw;
+  height: 60vh;
+  line-height: 35px;
+  font-size: 18px;
+  text-decoration: underline;
+  float: left;
+  overflow-y: auto;
+}
+.dullLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* The main area will house a graphics window */
+main {
+  background-color: #44318D;
+  border-style: solid;
+  border-width: 3px 0px 0px 0px;
+  border-color: #A4B3B6;
+  height: 60vh;
+}
+
+
+/* The footer will sit at the bottom with the same colour as the navigation bar */
+footer {
+  background-color: #8265A7;
+  color: #FFFFFF;
+  border-style: solid;
+  border-width: 3px 0px 0px 0px;
+  border-color: #A4B3B6;
+  text-align: center;
+  height: 70px;
+  line-height: 100px;
+  font-size: 22px;
+}
+.footImg {
+  margin-left: 2vw;
+  margin-right: 2vw;
+}

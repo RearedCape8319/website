@@ -5,13 +5,15 @@ This is where I will store the code files for my website. On my website will be 
 
 The following is a list of things I have added or want to add:
 - [ ] _Wobbly circle with noise_
-- [ ] _A snake using inverse kinematics_
+- [ ] _Sierpinski Triangle_
+- [ ] _Circle packing_
 - [ ] _Marchnig squares algorithm_
 - [ ] _Tic Tac Toe with minimax and alpha-beta pruning_
-- [ ] _Circle packing_
+- [ ] _A snake using inverse kinematics_
 - [ ] _Frogger_
 
 The project was created using the following:
 - **Node.js** (https://nodejs.org)
-- **Express** (https://expressjs.com/)
+- **Nodemon** (https://www.npmjs.com/package/nodemon)
+- **Express** (https://www.npmjs.com/package/express)
 - **P5.js** (https://p5js.org/)
