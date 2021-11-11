@@ -4,7 +4,7 @@
 This is where I will store the code files for my website. On my website will be a bunch of random stuff I fancied making, from games to illustrations.
 
 The following is a list of things I have added or want to add:
-- [ ] _Wobbly circle with noise_
+- [X] _Wobbly circle with noise_
 - [ ] _Sierpinski Triangle_
 - [ ] _Circle packing_
 - [ ] _Marchnig squares algorithm_
