@@ -7,7 +7,7 @@ Site is hosted at (https://rearedcape.herokuapp.com/).
 
 The following is a list of things I have added or want to add:
 - [x] _Wobbly circle with noise_
-- [ ] _Sierpinski Triangle_
+- [x] _Sierpinski Triangle_
 - [ ] _Circle packing_
 - [ ] _Marchnig squares algorithm_
 - [ ] _Tic Tac Toe with minimax and alpha-beta pruning_
