@@ -1,6 +1,8 @@
 /* Body will simply be a dark background */
 body {
   background-color: #1E0233;
+  text-align: center;
+  height: 95vh;
 }
 
 
@@ -8,7 +10,6 @@ body {
 header {
   background-color: #895575;
   color: #FFFFFF;
-  text-align: center;
   text-shadow: 4px 2px 2px #1E0233;
   font-size: 30px;
   height: 10vh;
@@ -25,7 +26,6 @@ nav {
   color: #E7D3CC;
   border-top-style: solid;
   border-color: #E7D3CC;
-  text-align: center;
   text-shadow: 3px 1px 1px #1E0233;
   font-size: 22px;
   height: 5vh;
@@ -38,10 +38,13 @@ nav {
 
 /* Main will be the background colour unless the canvas takes over */
 main {
-  background-color: #342D50;
+  background-color: #1E0233;
   color: #FFFFFF;
   border-top-style: solid;
   border-color: #E7D3CC;
   width: auto;
   height: 80vh;
+  margin: 0;
+  font-size: 20px;
+  line-height: 32px;
 }
