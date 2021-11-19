@@ -1,233 +1,172 @@
 /* Declare global variables */
-let board;
-let player;
-let winner;
+let board, player, winner, size;
 
 
-/* Declare useful functions for use in the program */
-// Function to return an array of all legal moves
-function getLegalMoves(b) {
-  let allowed = [];
-  for (let y = 0; y < 3; y++) {
-    for (let x = 0; x < 3; x++) {
-      if (b[y][x] == 0) {
-        allowed.push(createVector(x, y));
-      }
-    }
-  }
-  return allowed;
+
+/* Declare useful functions */
+function equals3(a, b, c) {
+  // Shorthand for checking three board locations
+  return (a == b && a == c);
 }
 
-// Function to show the board and pieces to the canvas
-function show(b) {
-  background(120);
+// Function to show the board on the screen
+function show() {
+  // Clear the screen
+  background(75);
+  // Go to the corner of the board to draw it
+  push();
+  translate((width-size)/2, (height-size)/2);
   stroke(0);
   strokeWeight(5);
-  let l = (min(width, height)*0.8) / 3;
-  let pTL = createVector((width/2)-(l*1.5), (height/2)-(l*1.5));
-  // Draw grid
-  line(pTL.x, pTL.y + l, pTL.x + 3*l, pTL.y + l);
-  line(pTL.x, pTL.y + 2*l, pTL.x + 3*l, pTL.y + 2*l);
-  line(pTL.x + l, pTL.y, pTL.x + l, pTL.y + 3*l);
-  line(pTL.x + 2*l, pTL.y, pTL.x + 2*l, pTL.y + 3*l);
-  // Draw pieces
-  for (let y = 0; y < 3; y++) {
-    for (let x = 0; x < 3; x++) {
-      // Handle player O's
-      if (b[y][x] == 1) {
-        stroke(0, 255, 0);
-        noFill();
-        let p = createVector(pTL.x + l/2 + l*x, pTL.y + l/2 + l*y)
-        ellipse(p.x, p.y, l*0.7, l*0.7)
-      // Handle computer X's
-      } else if (b[y][x] == -1) {
-        stroke(255, 0, 0);
-        let p = createVector(pTL.x + l/2 + l*x - l*0.35, pTL.y + l/2 + l*y - l*0.35);
-        line(p.x, p.y, p.x + l*0.7, p.y + l*0.7);
-        line(p.x, p.y + l*0.7, p.x + l*0.7, p.y);
+  noFill();
+  // Draw vertical and horizontal lines
+  for (let xoff = size/3; xoff < size; xoff += size/3) {
+    line(xoff, 0, xoff, size);
+  }
+  for (let yoff = size/3; yoff < size; yoff += size/3) {
+    line(0, yoff, size, yoff);
+  }
+  // Draw circles and crosses
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      let tl = createVector((j+0.15)*size/3, (i+0.15)*size/3);
+      let br = createVector((j+0.85)*size/3, (i+0.85)*size/3);
+      if (board[i][j] == -1) {
+        ellipse(tl.x, tl.y, br.x, br.y);
+      } else if (board[i][j] == 1) {
+        line(tl.x, tl.y, br.x, br.y);
+        line(tl.x, br.y, br.x, tl.y);
       }
     }
   }
-}
-
-// Function to see if three things are equal
-function equal3(a, b, c) {
-  return (a == b && b == c);
+  pop();
 }
 
 // Function to check for a winner
-function checkWin(b) {
+function checkWin() {
   // Check rows
-  for (let y = 0; y < 3; y++) {
-    if (equal3(b[y][0], b[y][1], b[y][2]) && b[y][0] != 0) {
-      return b[y][0];
+  for (let r = 0; r < 3; r++) {
+    if (equals3(board[r][0], board[r][1], board[r][2]) && board[r][0] != 0) {
+      return board[r][0];
     }
   }
   // Check columns
-  for (let x = 0; x < 3; x++) {
-    if (equal3(b[0][x], b[1][x], b[2][x]) && b[0][x] != 0) {
-      return b[0][x];
+  for (let c = 0; c < 3; c++) {
+    if (equals3(board[0][c], board[1][c], board[2][c]) && board[0][c] != 0) {
+      return board[0][c];
     }
   }
   // Check diagonals
-  if ((equal3(b[0][0], b[1][1], b[2][2]) || equal3(b[0][2], b[1][1], b[2][0])) && b[1][1] != 0) {
-    return b[1][1];
+  if ((equals3(board[0][0], board[1][1], board[2][2]) || equals3(board[0][2], board[1][1], board[2][0])) && board[1][1] != 0) {
+    return board[1][1];
   }
-  // Indicate no-one has won yet if still here
-  return 0;
+  // Default return null
+  return null;
+}
+
+// Function to get all available spots on the board
+function allMoves() {
+  let all = [];
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[i][j] == 0) {
+        all.push([i, j]);
+      }
+    }
+  }
+  return all;
+}
+
+// Funciton to get the best move and return it
+function getMove() {
+  let possible = allMoves();
+  let index = floor(random(possible.length));
+  return possible[index];
 }
 
 
 
-/* Setup function is run once at the start of the program */
+/* Setup function is run once when the program starts */
 function setup() {
-  // Setup canvas
-  let posinfo = document.getElementById("sketch-holder").getBoundingClientRect();
-  let canvas = createCanvas(posinfo.width, posinfo.height);
+  // Setup the canvas and its settings
+  let info = document.getElementById("sketch-holder").getBoundingClientRect();
+  let canvas = createCanvas(info.width, info.height);
   canvas.parent("sketch-holder");
+  colorMode(HSB, 360, 100, 100, 100);
+  ellipseMode(CORNERS);
 
   // Initialise global variables
-  ellipseMode(CENTER);
-  colorMode(RGB, 255, 255, 255, 100);
   board = [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0]
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
   ];
-  player = 1;
-  winner = 0;
+  player = -1;
+  winner = null;
+  size = min(width, height) * 0.8;
 
-  // Show the initial board
-  show(board);
+  // Show the board
+  show();
 }
 
 
-/* Function to detect and handle mouse press by the user */
+
+/* Function to detect the mouse press of the user */
 function mousePressed() {
-  // Check that the mouse is inside the play area and it is the users go
-  let l = (min(width, height)*0.8) / 3;
-  let pTL = createVector((width/2)-(l*1.5), (height/2)-(l*1.5));
+  // Do nothing if the game is over or it is the computer's turn
+  if (winner != null || player == 1) {
+    return;
+  }
+  // Turn the mouse position into a board index
   if (
-    player == 1 &&
-    mouseX > pTL.x && mouseX < pTL.x + 3*l &&
-    mouseY > pTL.y && mouseY < pTL.y + 3*l
+    mouseX < (width-size)/2 || mouseX > width-((width-size)/2) ||
+    mouseY < (height-size)/2 || mouseY > height-((height-size)/2)
   ) {
-    // Check mouse is choosing a free spot
-    let p = createVector(floor((mouseX-pTL.x)/l), floor((mouseY-pTL.y)/l));
-    if (board[p.y][p.x] == 0 && winner == 0) {
-      // Put the player in that spot and pass play on
-      board[p.y][p.x] = 1;
-      player *= -1;
-      show(board);
-      winner = checkWin(board);
-      // Output if wins
-      if (winner == 1) {
-        document.getElementById("tictac").innerHTML = "Winner is O";
-      }
-
-      // Do the computer move
-      let legal = getLegalMoves(board);
-      if (legal.length > 0 && winner == 0) {
-        let current = new Node(true, board, legal.length, p);
-        let cpu = minimax(current);
-        board[cpu.y][cpu.x] = -1;
-        player *= -1;
-        show(board);
-        winner = checkWin(board);
-        // Output if wins
-        if (winner != 0) {
-          document.getElementById("tictac").innerHTML = "Winner is X";
-        }
-      }
-    }
-  }
-}
-
-
-/* The minimax algorithm to get the best computer move */
-function minimax(n) {
-  // Get all daughters
-  let legal = getLegalMoves(n.board);
-  let daughters = [];
-  for (let move of legal) {
-    let tmp = [];
-    for (let i = 0; i < n.board.length; i++) {
-      tmp[i] = n.board[i].splice();
-    }
-    let val = -1;
-    if (n.maximising) {
-      val = 1;
-    }
-    tmp[move.y][move.x] = val;
-    daughters.push(new Node(!n.maximising, tmp, n.depth-1, move));
-  }
-
-  // If maximising, return best move
-  if (n.maximising) {
-    let bestNode = daughters[0];
-    for (let d of daughters.slice(1)) {
-      if (d.value > bestNode.value) {
-        bestNode = d;
-      }
-    }
-    console.log(bestNode);
-    console.log(bestNode.prevMove);
-    return bestNode.prevMove;
-  // If minimising, return worst move
+    return;
   } else {
-    let worstNode = daughters[0];
-    for (let d of daughters.slice(1)) {
-      if (d.value < worstNode.value) {
-        besworstNodetNode = d;
+    // Play the move if allowed
+    let i = floor((mouseY - (height-size)/2) / (size/3));
+    let j = floor((mouseX - (width-size)/2) / (size/3));
+    if (board[i][j] == 0) {
+      board[i][j] = -1;
+      player = 1;
+      show();
+      winner = checkWin();
+      // After play, make the computer move if allowed
+      if (winner == null) {
+        let move = getMove();
+        board[move[0]][move[1]] = 1;
+        player = -1;
+        show();
+        winner = checkWin();
       }
     }
-    console.log(worstNode);
-    console.log(worstNode.prevMove);
-    return worstNode.prevMove;
+  }
+  if (winner == 1) {
+    document.getElementById("tictac").innerHTML = "X wins";
+  } else if (winner == -1) {
+    document.getElementById("tictac").innerHTML = "O wins";
   }
 }
 
-// MinimaxVal algorithm to evaluate a node
-function minimaxVal(n) {
-  // If depth runs out (should be no legal moves here) then return score of board
-  let legal = getLegalMoves(n.board);
-  if (legal.length == 0) {
-    return checkWin(n.board);
-  }
 
-  // Get all daughters
-  let daughters = [];
-  for (let move of legal) {
-    let tmp = [];
-    for (let i = 0; i < n.board.length; i++) {
-      tmp[i] = n.board[i].slice();
-    }
-    let val = -1;
-    if (n.maximising) {
-      val = 1;
-    }
-    tmp[move.y][move.x] = val;
-    daughters.push(new Node(!n.maximising, tmp, n.depth-1, move));
-  }
 
-  // If maximising, return best score
-  if (n.maximising) {
-    let bestScore = daughters[0].value;
-    for (let d of daughters.slice(1)) {
-      if (d.value > bestScore) {
-        bestScore = d.value;
-      }
-    }
-    return bestScore;
-  // If minimising, return worst score
-  } else {
-    let worstScore = daughters[0].value;
-    for (let d of daughters.slice(1)) {
-      if (d.value < worstScore) {
-        worstScore = d.value;
-      }
-    }
-    return worstScore;
-  }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// placeholder
