@@ -43,33 +43,33 @@ function show() {
 }
 
 // Function to check for a winner
-function checkWin() {
+function checkWin(b) {
   // Check rows
   for (let r = 0; r < 3; r++) {
-    if (equals3(board[r][0], board[r][1], board[r][2]) && board[r][0] != 0) {
-      return board[r][0];
+    if (equals3(b[r][0], b[r][1], b[r][2]) && b[r][0] != 0) {
+      return b[r][0];
     }
   }
   // Check columns
   for (let c = 0; c < 3; c++) {
-    if (equals3(board[0][c], board[1][c], board[2][c]) && board[0][c] != 0) {
-      return board[0][c];
+    if (equals3(b[0][c], b[1][c], b[2][c]) && b[0][c] != 0) {
+      return b[0][c];
     }
   }
   // Check diagonals
-  if ((equals3(board[0][0], board[1][1], board[2][2]) || equals3(board[0][2], board[1][1], board[2][0])) && board[1][1] != 0) {
-    return board[1][1];
+  if ((equals3(b[0][0], b[1][1], b[2][2]) || equals3(b[0][2], b[1][1], b[2][0])) && b[1][1] != 0) {
+    return b[1][1];
   }
   // Default return null
   return null;
 }
 
 // Function to get all available spots on the board
-function allMoves() {
+function allMoves(b) {
   let all = [];
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
-      if (board[i][j] == 0) {
+      if (b[i][j] == 0) {
         all.push([i, j]);
       }
     }
@@ -77,11 +77,32 @@ function allMoves() {
   return all;
 }
 
-// Funciton to get the best move and return it
+// Funciton to get a random move and return it
 function getMove() {
   let possible = allMoves();
   let index = floor(random(possible.length));
   return possible[index];
+}
+
+// Function to display game over message
+function gameOver() {
+  let output = "Winner is ";
+  if (player == -1) {
+    output += "O";
+  } else {
+    output += "X";
+  }
+  document.getElementById("tictac").value = output;
+}
+
+// Fucntion to return a copy of a modified board
+function modBoard(b, m, p) {
+  let newBoard = [];
+  for (let r of b) {
+    newBoard.push(r.slice());
+  }
+  newBoard[m[0]][m[1]] = p;
+  return newBoard;
 }
 
 
@@ -114,7 +135,7 @@ function setup() {
 /* Function to detect the mouse press of the user */
 function mousePressed() {
   // Do nothing if the game is over or it is the computer's turn
-  if (winner != null || player == 1) {
+  if (winner != null || player != -1) {
     return;
   }
   // Turn the mouse position into a board index
@@ -123,29 +144,35 @@ function mousePressed() {
     mouseY < (height-size)/2 || mouseY > height-((height-size)/2)
   ) {
     return;
-  } else {
-    // Play the move if allowed
-    let i = floor((mouseY - (height-size)/2) / (size/3));
-    let j = floor((mouseX - (width-size)/2) / (size/3));
-    if (board[i][j] == 0) {
-      board[i][j] = -1;
-      player = 1;
-      show();
-      winner = checkWin();
-      // After play, make the computer move if allowed
-      if (winner == null) {
-        let move = getMove();
-        board[move[0]][move[1]] = 1;
-        player = -1;
-        show();
-        winner = checkWin();
-      }
-    }
   }
-  if (winner == 1) {
-    document.getElementById("tictac").innerHTML = "X wins";
-  } else if (winner == -1) {
-    document.getElementById("tictac").innerHTML = "O wins";
+  // Play the move if allowed
+  let i = floor((mouseY - (height-size)/2) / (size/3));
+  let j = floor((mouseX - (width-size)/2) / (size/3));
+  if (board[i][j] != 0) {
+    return
+  }
+  board[i][j] = -1;
+  // Show the board
+  show();
+  // Check for winner
+  winner = checkWin(board);
+  if (winner != null) {
+    gameOver();
+    return;
+  }
+  // Get cpu move
+  player *= -1;
+  cpu = minimax(new Node(board, null, true), allMoves(board).length-1);
+  console.log(cpu);
+  board[cpu[0]][cpu[1]] = 1;
+  player *= -1;
+  // Show the board
+  show();
+  // Check for winner
+  winner = checkWin(board);
+  if (winner != null) {
+    gameOver();
+    return;
   }
 }
 
