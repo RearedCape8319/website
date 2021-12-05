@@ -1,6 +1,6 @@
 /**
 * CLASS STRUCTURE FOR A BOARD
-* - Store pieces, current player, and number of free spots
+* - Store pieces, current player, number of free spots, size
 * - Check for a winner
 * - Place pieces
 * - Return a deep copy (by value, not reference)
@@ -8,7 +8,7 @@
 class Board {
 
   /* Constructor function is run when objects are created */
-  constructor() {
+  constructor(s) {
     // Setup object proeprties
     this.grid = [
       [0, 0, 0],
@@ -17,6 +17,8 @@ class Board {
     ];
     this.currentPlayer = 1;
     this.freeSpots = 9;
+    this.fullSize = s;
+    this.spotSize = s/3;
   }
 
 
@@ -49,12 +51,17 @@ class Board {
 
   /* Method to place pieces on the board */
   place(x, y) {
-    // Only place it if the given co-ordinates are between [0, 3]
-    if (0 <= x && x <= 2 && 0 <= y && y <= 2) {
-      this.grid[y][x] = this.currentPlayer;
-      this.currentPlayer *= -1;
-      this.freeSpots--;
+    // Return fasle to indicate invalid place request
+    if (0 > x || x > 2 || 0 > y || y > 2) {
+      return false;
     }
+    if (this.grid[y][x] != 0) {
+      return false;
+    }
+    this.grid[y][x] = this.currentPlayer;
+    this.currentPlayer *= -1;
+    this.freeSpots--;
+    return true;
   }
 
 

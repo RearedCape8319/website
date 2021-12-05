@@ -8,12 +8,51 @@ function equals3(a, b, c) {
 }
 
 
+/* Function to show the board to the screen */
+function show(b) {
+  // Clear the screen
+  background(120);
+  // Draw the grid lines
+  stroke(0);
+  strokeWeight(5);
+  noFill();
+  rect(width/2, height/2, b.fullSize, b.fullSize);
+  line((width-b.spotSize)/2, (height-b.fullSize)/2, (width-b.spotSize)/2, (height+b.fullSize)/2);
+  line((width+b.spotSize)/2, (height-b.fullSize)/2, (width+b.spotSize)/2, (height+b.fullSize)/2);
+  line((width-b.fullSize)/2, (height-b.spotSize)/2, (width+b.fullSize)/2, (height-b.spotSize)/2);
+  line((width-b.fullSize)/2, (height+b.spotSize)/2, (width+b.fullSize)/2, (height+b.spotSize)/2);
+  for (let r = 0; r <= 2; r++) {
+    for (let c = 0; c <= 2; c++) {
+      if (b.grid[r][c] == 1) {
+        ellipse(width/2 + (c-1)*b.spotSize, height/2 + (r-1)*b.spotSize, b.spotSize*0.7, b.spotSize*0.7);
+      } else if (b.grid[r][c] == -1) {
+        let spot = createVector(width/2 + (c-1)*b.spotSize, height/2 + (r-1)*b.spotSize);
+        let p1 = spot.copy().sub(b.spotSize*0.35, b.spotSize*0.35);
+        let p2 = spot.copy().add(b.spotSize*0.35, b.spotSize*0.35);
+        line(p1.x, p1.y, p2.x, p2.y);
+        line(p1.x, p2.y, p2.x, p1.y);
+      }
+    }
+  }
+}
+
+/* Function to take a mouse input and return the board co-ordinates of the click */
+function mouseToCoord(mX, mY, b) {
+  let m = createVector(mX, mY);
+  m.sub((width-b.fullSize)/2, (height-b.fullSize)/2);
+  m.x = floor(m.x / b.spotSize);
+  m.y = floor(m.y / b.spotSize);
+  return m;
+}
+
+
 
 /**
 * Create global variables for use in the program
 * - Board object
+* - Winner flag
 **/
-let board;
+let board, winner;
 
 
 
@@ -27,28 +66,39 @@ function setup() {
   let info = document.getElementById("sketch-holder").getBoundingClientRect();
   let canvas = createCanvas(info.width, info.height);
   canvas.parent("sketch-holder");
-  colorMode(HSB, 360, 100, 100, 100);
+  colorMode(RGB, 255, 255, 255, 100);
   ellipseMode(CENTER);
   rectMode(CENTER);
   // Initialise the board
-  board = new Board();
+  let size = min(width, height) * 0.8;
+  board = new Board(size);
+  winner = null;
+  show(board);
+}
 
-  // TESTS FOR THE BOARD TO SEE IF IT WORKS
-  moves = [
-    [0, 0],
-    [1, 0],
-    [0, 1],
-    [1, 1],
-    [1, 2],
-    [0, 2],
-    [2, 0],
-    [2, 2],
-    [2, 1]
-  ];
-  for (let m of moves) {
-    board.place(m[0], m[1]);
+
+
+/**
+* Mouse Pressed event is captured and runs this function
+* - Turn mouse lcoation into grid co-ordinates
+* - Place the piece on the clicked spot if valid
+* - Automatically do the computer move when done
+**/
+function mousePressed() {
+  if (board.currentPlayer != 0 && board.freeSpots > 0 && winner == null) {
+    let choice = mouseToCoord(mouseX, mouseY, board);
+    console.log(choice);
+    let done = board.place(choice.x, choice.y);
+    // If the spot could not be filled then return, otherwise do computer
+    if (!done) {
+      return;
+    }
     winner = board.checkForWinner();
-    console.log(m);
-    console.log(winner);
+    if (winner != null) {
+      document.getElementById("tictac").innerHTML = "WINNER IS " + winner;
+    }
+    // cpuMove = getCPU();
+    // board.place(cpuMove.x, cpuMove.y);
+    show(board);
   }
 }
