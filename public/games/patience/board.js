@@ -25,6 +25,7 @@ class Board {
     this.playerPos = createVector(0, midY);
     this.generatePath();
     this.fillIn();
+    this.zap();
   }
 
 
@@ -35,8 +36,8 @@ class Board {
     strokeWeight(1);
     // noStroke();
     let offset = createVector((width - this.c*this.spotSize) / 2, (height - this.r*this.spotSize) / 2);
-    for (let r = 0; r < this.grid.length; r++) {
-      for (let c = 0; c < this.grid[r].length; c++) {
+    for (let r = 0; r < this.r; r++) {
+      for (let c = 0; c < this.c; c++) {
         if (this.grid[r][c] == null) {
           continue;
         }
@@ -58,7 +59,7 @@ class Board {
     let stack = [];
     let done = false;
     while (!done) {
-      let possible = this.getNearby(current.copy(), stack, this.r, this.c);
+      let possible = this.getNearby(current.copy(), stack, false);
       if (possible.length > 0) {
         let choice = random(possible);
         if (this.grid[choice.y][choice.x] instanceof Goal) {
@@ -78,7 +79,7 @@ class Board {
 
 
   /* Method to return positions next to a given spot, not including ones given */
-  getNearby(loc, ignore, rows, cols) {
+  getNearby(loc, ignore, all) {
     let output = [];
     // Search the 8 surrounding squares from the given spot
     for (let x = -1; x <= 1; x++) {
@@ -86,11 +87,13 @@ class Board {
         // Create a temporary copy of the new location
         let tmp = createVector(loc.x + x, loc.y + y);
         // Skip if the location has an index in the list of ignored locations
-        if (ignore.indexOf(tmp) >= 0) {
-          continue;
+        if (!all) {
+          if (ignore.indexOf(tmp) >= 0) {
+            continue;
+          }
         }
         // Skip if one of the co-ordinates is negative
-        if (tmp.y < 0 || tmp.x < 0 || tmp.y >= rows || tmp.x >= cols) {
+        if (tmp.y < 0 || tmp.x < 0 || tmp.y >= this.r || tmp.x >= this.c) {
           continue;
         }
         // Skip if both or neither offsets are 0 to skip current and diagonals
@@ -98,7 +101,7 @@ class Board {
           continue;
         }
         // If the spot is free, it is allowed to be included in the output
-        if (this.grid[tmp.y][tmp.x] == null || this.grid[tmp.y][tmp.x] instanceof Goal) {
+        if (this.grid[tmp.y][tmp.x] == null || this.grid[tmp.y][tmp.x] instanceof Goal || all) {
           output.push(tmp.copy());
         }
       }
@@ -109,10 +112,28 @@ class Board {
 
   /* Method to fill in the rest of the board */
   fillIn() {
-    for (let r = 0; r < this.grid.length; r++) {
-      for (let c = 0; c < this.grid[r].length; c++) {
+    for (let r = 0; r < this.r; r++) {
+      for (let c = 0; c < this.c; c++) {
         if (this.grid[r][c] == null) {
           this.grid[r][c] = giveSpot(null);
+        }
+      }
+    }
+  }
+
+
+  /* Method to electrify any water next to electricity */
+  zap() {
+    for (let r = 0; r < this.r; r++) {
+      for (let c = 0; c < this.c; c++) {
+        if (!(this.grid[r][c] instanceof Water)) {
+          continue;
+        }
+        let tests = this.getNearby(createVector(c, r), null, true);
+        for (let t of tests) {
+          if (this.grid[t.y][t.x] instanceof Electric) {
+            this.grid[r][c].electrify();
+          }
         }
       }
     }
