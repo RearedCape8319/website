@@ -24,6 +24,7 @@ class Board {
     this.spotSize = min(0.8*width/columns, 0.8*height/rows);
     this.playerPos = createVector(0, midY);
     this.generatePath();
+    this.fillIn();
   }
 
 
@@ -103,6 +104,18 @@ class Board {
       }
     }
     return output;
+  }
+
+
+  /* Method to fill in the rest of the board */
+  fillIn() {
+    for (let r = 0; r < this.grid.length; r++) {
+      for (let c = 0; c < this.grid[r].length; c++) {
+        if (this.grid[r][c] == null) {
+          this.grid[r][c] = giveSpot(null);
+        }
+      }
+    }
   }
 
 
