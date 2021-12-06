@@ -88,3 +88,39 @@ class Orange extends Spot {
     this.colour = color(234, 132, 31);
   }
 }
+
+
+
+/**
+* Declare a useful function for giving a new spot
+* - Will take a previous spot and return a random spot that is valid
+**/
+function giveSpot(prevSpot) {
+  let done = false;
+  let choice = null;
+  while (!done) {
+    switch (floor(random(5))) {
+      case 0:
+        choice = new Pink();
+        break;
+      case 1:
+        choice = new Green();
+        break;
+      case 2:
+        choice = new Soap();
+        break;
+      case 3:
+        if (!(prevSpot instanceof Orange)) {
+          choice = new Water();
+        }
+        break;
+      case 4:
+        choice = new Orange();
+        break;
+    }
+    if (choice != null) {
+      done = true;
+    }
+  }
+  return choice;
+}

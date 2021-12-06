@@ -17,7 +17,7 @@ function setup() {
   let canvas = createCanvas(info.width, info.height);
   canvas.parent("sketch-holder");
   // Initialise global variables
-  board = new Board(5, 9);
+  board = new Board(4, 4);
 }
 
 
