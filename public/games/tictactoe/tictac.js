@@ -114,6 +114,7 @@ function mousePressed() {
     winner = board.checkForWinner();
     if (winner != null) {
       document.getElementById("tictac").innerHTML = "WINNER IS " + winner;
+      show(board);
       return;
     }
     show(board);
