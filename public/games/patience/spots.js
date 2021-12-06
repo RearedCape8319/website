@@ -22,56 +22,67 @@ class Spot {
 * Class structures for each of the spot types
 **/
 class Pink extends Spot {
-  // Simply create a pink safe spot
+  /* Simply create a pink safe spot */
   constructor() {
     super(true, false, false, false, false, false);
     this.colour = color(251, 138, 202)
   }
 }
+
 class Green extends Spot {
-  // Create a green safe spot
+  /* Create a green safe spot */
   constructor() {
     super(true, false, false, false, false, false);
     this.colour = color(131, 214, 144);
   }
 }
+
 class Goal extends Spot {
-  // Create the goal
+  /* Create the goal */
   constructor() {
     super(true, false, false, false, false, true);
     this.colour = color(128);
   }
 }
+
 class Lava extends Spot {
-  // Create the red lava spot
+  /* Create the red lava spot */
   constructor() {
     super(false, false, false, false, false, false);
     this.colour = color(239, 89, 90);
   }
 }
+
 class Soap extends Spot {
-  // Create the red lava spot
+  /* Create the slippery spot */
   constructor() {
     super(true, false, false, true, false, false);
     this.colour = color(163, 108, 212);
   }
 }
+
 class Electric extends Spot {
-  // Create the red lava spot
+  /* Create the electric spot */
   constructor() {
     super(false, true, false, false, false, false);
     this.colour = color(240, 235, 91);
   }
 }
+
 class Water extends Spot {
-  // Create the red lava spot
+  /* Create the water spot */
   constructor() {
     super(true, false, true, false, false, false);
     this.colour = color(91, 135, 240);
   }
+  /* Method to electrify water, to be used when next to electricity */
+  electrify() {
+    this.electrified = true;
+  }
 }
+
 class Orange extends Spot {
-  // Create the red lava spot
+  /* Create the orange spot */
   constructor() {
     super(true, false, false, false, true, false);
     this.colour = color(234, 132, 31);

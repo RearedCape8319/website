@@ -19,3 +19,12 @@ function setup() {
   // Initialise global variables
   board = new Board(5, 9);
 }
+
+
+
+/**
+* Draw function rund continuously after setup is complete
+**/
+function draw() {
+  board.show();
+}
