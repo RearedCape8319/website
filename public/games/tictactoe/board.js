@@ -4,10 +4,11 @@
 * - Check for a winner
 * - Place pieces
 * - Return a deep copy (by value, not reference)
+* - Return all possible moves
 **/
 class Board {
 
-  /* Constructor function is run when objects are created */
+  /* Constructor function for when the original board is made */
   constructor(s) {
     // Setup object proeprties
     this.grid = [
@@ -62,6 +63,34 @@ class Board {
     this.currentPlayer *= -1;
     this.freeSpots--;
     return true;
+  }
+
+
+  /* Method to return a deep copy of the board */
+  deepCopy() {
+    let b = [];
+    for (let r = 0; r <= 2; r++) {
+      b.push(this.grid[r].slice());
+    }
+    let copy = new Board(this.fullSize);
+    copy.grid = b;
+    copy.currentPlayer = this.currentPlayer;
+    copy.freeSpots = this.freeSpots;
+    return copy;
+  }
+
+
+  /* Method to return all posisble moves */
+  possibleMoves() {
+    let output = [];
+    for (let r = 0; r <= 2; r++) {
+      for (let c = 0; c <= 2; c++) {
+        if (this.grid[r][c] == 0) {
+          output.push([c, r]);
+        }
+      }
+    }
+    return output;
   }
 
 

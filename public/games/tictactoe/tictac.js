@@ -51,8 +51,9 @@ function mouseToCoord(mX, mY, b) {
 * Create global variables for use in the program
 * - Board object
 * - Winner flag
+* - Cpu object
 **/
-let board, winner;
+let board, winner, cpu;
 
 
 
@@ -69,10 +70,12 @@ function setup() {
   colorMode(RGB, 255, 255, 255, 100);
   ellipseMode(CENTER);
   rectMode(CENTER);
-  // Initialise the board
+  // Initialise the global variables
   let size = min(width, height) * 0.8;
   board = new Board(size);
   winner = null;
+  cpu = new Cpu();
+  // Show the initial board
   show(board);
 }
 
@@ -87,18 +90,32 @@ function setup() {
 function mousePressed() {
   if (board.currentPlayer != 0 && board.freeSpots > 0 && winner == null) {
     let choice = mouseToCoord(mouseX, mouseY, board);
-    console.log(choice);
     let done = board.place(choice.x, choice.y);
     // If the spot could not be filled then return, otherwise do computer
     if (!done) {
       return;
     }
+    // If the player move just won, say so and return
     winner = board.checkForWinner();
     if (winner != null) {
       document.getElementById("tictac").innerHTML = "WINNER IS " + winner;
+      show(board);
+      return;
     }
-    // cpuMove = getCPU();
-    // board.place(cpuMove.x, cpuMove.y);
+    // If there are no moves left, return
+    if (board.freeSpots == 0) {
+      show(board);
+      return;
+    }
+    // If here then cpu still has a move to make
+    cpuMove = cpu.getMove(board.deepCopy());
+    board.place(cpuMove[0], cpuMove[1]);
+    // If the cpu move just won, say so and return
+    winner = board.checkForWinner();
+    if (winner != null) {
+      document.getElementById("tictac").innerHTML = "WINNER IS " + winner;
+      return;
+    }
     show(board);
   }
 }
