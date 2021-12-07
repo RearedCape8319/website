@@ -95,7 +95,7 @@ class Orange extends Spot {
 * Declare a useful function for giving a new spot
 * - Will take a previous spot and return a random spot that is valid
 **/
-function giveSpot(prevSpot) {
+function giveSpot(prevSpot, delicious, conductive) {
   let choice = null;
   if (prevSpot != null) {
     let done = false;
@@ -111,7 +111,7 @@ function giveSpot(prevSpot) {
           choice = new Soap();
           break;
         case 3:
-          if (!(prevSpot instanceof Orange)) {
+          if (!delicious) {
             choice = new Water();
           }
           break;
@@ -124,28 +124,36 @@ function giveSpot(prevSpot) {
       }
     }
   } else {
-    switch (floor(random(7))) {
-      case 0:
-        choice = new Pink();
-        break;
-      case 1:
-        choice = new Green();
-        break;
-      case 2:
-        choice = new Lava();
-        break;
-      case 3:
-        choice = new Soap();
-        break;
-      case 4:
-        choice = new Electric();
-        break;
-      case 5:
-        choice = new Water();
-        break;
-      case 6:
-        choice = new Orange();
-        break;
+    let done = false;
+    while (!done) {
+      switch (floor(random(7))) {
+        case 0:
+          choice = new Pink();
+          break;
+        case 1:
+          choice = new Green();
+          break;
+        case 2:
+          choice = new Lava();
+          break;
+        case 3:
+          choice = new Soap();
+          break;
+        case 4:
+          if (!conductive) {
+            choice = new Electric();
+          }
+          break;
+        case 5:
+          choice = new Water();
+          break;
+        case 6:
+          choice = new Orange();
+          break;
+      }
+      if (choice != null) {
+        done = true;
+      }
     }
   }
   return choice;

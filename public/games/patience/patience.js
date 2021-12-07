@@ -1,8 +1,9 @@
 /**
 * Declare global variables for use in the program
 * - The board object
+* - A score of how many levels are beat
 **/
-let board;
+let board, points;
 
 
 
@@ -19,6 +20,7 @@ function setup() {
   // Initialise global variables
   board = new Board(5, 9);
   board.show();
+  points = 0;
 }
 
 
@@ -57,12 +59,13 @@ function keyPressed() {
     console.log("out of bounds");
     return;
   }
-  if (board.grid[pos.y][pos.x].walkable) {
+  if ((board.grid[pos.y][pos.x] instanceof Water && board.playerOrange) || !(board.grid[pos.y][pos.x].walkable)) {
+    console.log("blocked");
+  } else {
     board.move(movement);
     if (board.checkWin()) {
-      document.getElementById("pat").innerHTML = "YOU WIN";
+      board = new Board(board.r, board.c);
+      board.show();
     }
-  } else {
-    console.log("blocked");
   }
 }
