@@ -24,6 +24,10 @@ class Board {
     this.spotSize = min(0.8*width/columns, 0.8*height/rows);
     this.playerPos = createVector(0, midY);
     this.generatePath();
+    this.originalPath = [];
+    for (let r of this.grid) {
+      this.originalPath.push([...r]);
+    }
     this.fillIn();
     this.zap();
   }
@@ -38,11 +42,12 @@ class Board {
     let offset = createVector((width - this.c*this.spotSize) / 2, (height - this.r*this.spotSize) / 2);
     for (let r = 0; r < this.r; r++) {
       for (let c = 0; c < this.c; c++) {
-        if (this.grid[r][c] == null) {
-          continue;
-        }
         fill(this.grid[r][c].colour);
         rect(offset.x + c*this.spotSize, offset.y + r*this.spotSize, this.spotSize, this.spotSize);
+        if (this.originalPath[r][c] != null) {
+          noFill();
+          ellipse(offset.x + (c+0.5)*this.spotSize, offset.y + (r+0.5)*this.spotSize, this.spotSize*0.6, this.spotSize*0.6);
+        }
       }
     }
     ellipseMode(CENTER);
@@ -140,6 +145,16 @@ class Board {
   }
 
 
+  /* Method to move the player */
+  move(step) {
+    this.playerPos.add(step);
+    this.show();
+  }
 
+
+  /* Method to check if the player has got to the goal */
+  checkWin() {
+    return (this.grid[this.playerPos.y][this.playerPos.x] instanceof Goal)
+  }
 
 }
