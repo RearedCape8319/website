@@ -64,6 +64,7 @@ class Board {
 
 
   /* Method to generate the starting path */
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ THIS NEEDS MODIFYING
   generatePath() {
     let current = this.playerPos.copy();
     let stack = [];
