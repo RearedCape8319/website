@@ -11,30 +11,29 @@ function setup() {
   rectMode(CORNER);
 
   // Initialise global variables
-  res = 10;
+  res = 15;
   grid = new Grid(width, height, res);
+
+  // Show the pattern by calling the event handler that generates patterns
+  mousePressed();
+}
+
+
+
+/* Function to handle mouse press event to generate new pattern */
+function mousePressed() {
   topLabel = [];
   sideLabel = [];
   for (let i = 0; i < res; i++) {
     topLabel.push(floor(random(2)));
     sideLabel.push(floor(random(2)));
   }
-
-  // Show the pattern
   background(120);
   grid.show(sideLabel, topLabel);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// PLacehldere
+function keyPressed() {
+  if (key == "Enter" || key == " ") {
+    mousePressed();
+  }
+}
