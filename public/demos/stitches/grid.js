@@ -15,13 +15,13 @@ class Grid {
 
   show(labelH, labelV) {
     stroke(0);
-    strokeWeight(10);
-    for (let i = 0; i < this.resolution; i++) {
-      for (let j = 0; j < this.resolution; j++) {
-        let pos = createVector(this.topLeft.x + j*this.lineSize, this.topLeft.y + i*this.lineSize)
-        point(pos.x, pos.y);
-      }
-    }
+    // strokeWeight(10);
+    // for (let i = 0; i < this.resolution; i++) {
+    //   for (let j = 0; j < this.resolution; j++) {
+    //     let pos = createVector(this.topLeft.x + j*this.lineSize, this.topLeft.y + i*this.lineSize)
+    //     point(pos.x, pos.y);
+    //   }
+    // }
     strokeWeight(2);
     noFill();
     // rect(this.topLeft.x, this.topLeft.y, this.totalSize, this.totalSize);
