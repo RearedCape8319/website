@@ -60,6 +60,13 @@ class Board {
       fill(88, 88, 255);
     }
     ellipse(pos.x, pos.y, this.spotSize*0.7, this.spotSize*0.7);
+
+    if (false) {
+      stroke(255, 120);
+      strokeWeight(5);
+      line(0, 0, width, height);
+      line(0, height, width, 0);
+    }
   }
 
 
