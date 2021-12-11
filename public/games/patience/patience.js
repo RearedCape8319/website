@@ -69,3 +69,26 @@ function keyPressed() {
     }
   }
 }
+
+
+
+/**
+* Function to handle screen clicks so mobile users can make moves
+**/
+function mousePressed() {
+  // Create two lines
+  let y1 = height - (height/width)*mouseX;
+  let y2 = (height/width)*mouseX;
+  // See which segment of the screen was clicked
+  let movement = createVector(0, 0);
+  if (mouseY > y2 && mouseY > y1) {
+    movement.y = 1;
+  } else if (mouseY < y2 && mouseY < y1) {
+    movement.y = -1;
+  } else if (mouseY > y2 && mouseY < y1) {
+    movement.x = -1;
+  } else if (mouseY < y2 && mouseY > y1) {
+    movement.x = 1;
+  }
+  board.move(movement);
+}
