@@ -6,6 +6,7 @@ This github repo will store all of the source code for my website. The site will
 The site is hosted [here](https://rearedcape.herokuapp.com "My Random Website")
 
 # Information about each project
+**Each project will be listed in the order it was created, so games and demos will not be separated through the order the projects are listed below**
 ## _Sierpinski Triangle (Demo)_
 The Sierpinski Triangle project is a demonstration that uses a quirk of mathematics to create the Sierpinski Triangle fractal patern with a single dot and the three corners of a triangle.
 
@@ -32,3 +33,12 @@ The rules are as follows:
 + The gray space is the finish, stand here to get a point and move on to the next level
 
 The player can move their blue character around with the arrow keys, and should try to complete as many levels as they can.
+
+## _Hitomezashi Stitch Patterns_
+Hitomezashi Stitch Patterns are created on grids of dots. 
+
+For each row and column a binary value is assigned which dictates wheter to offset stitching or not. When offset by 0 or 1 from the start of the corresponding row/column, a stitch is made from that dot to the next one along in the appropriate direction. There is then a gap until the next dot wehre another stitch is made. This sequence of stitching every other dot to the next is continued until the end of the grid is reached. 
+
+Once each row and column is complete, a pattern will have emerged.
+
+To create a new pattern, you can click the mouse on the screen, or press the ENTER or SPACE keys on the keyboard.
