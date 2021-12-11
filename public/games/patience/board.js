@@ -8,6 +8,18 @@ class Board {
 
   /* Constructor function for creating a board of random squares */
   constructor(rows, columns) {
+    let possible = false;
+    let attempts = 1;
+    while (!possible) {
+      this.generate(rows, columns);
+      possible = this.solve();
+      attempts++;
+    }
+  }
+
+
+  /* Method to generate the board */
+  generate(rows, columns) {
     this.grid = [];
     for (let r = 1; r <= rows; r++) {
       let row = [];
@@ -71,6 +83,7 @@ class Board {
 
 
   /* Method to generate the starting path */
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ THIS NEEDS MODIFYING
   generatePath() {
     let current = this.playerPos.copy();
     let stack = [];
@@ -203,6 +216,83 @@ class Board {
       return true;
     }
     return false;
+  }
+
+
+  /* Method to get all moves from a log of visited spots and a lcoation */
+  getMoves(vis, loc) {
+    let output = [];
+    for (let m of [createVector(1, 0), createVector(-1, 0), createVector(0, 1), createVector(0, -1)]) {
+      let y = loc.y + m.y;
+      let x = loc.x + m.x;
+      if (y < 0 || x < 0 || y >= this.r || x >= this.c) {
+        continue;
+      }
+      if (!vis[y][x] && this.grid[y][x].walkable) {
+        output.push(m.copy());
+      }
+    }
+    return output;
+  }
+
+
+  /* Method to make a fake move on a given grid */
+  fakeMove(fakeGrid, visited, loc, dir, isOrange) {
+    let spot;
+    do {
+      let newPos = loc.copy().add(dir.copy());
+      spot = fakeGrid[newPos.y][newPos.x];
+      if (spot instanceof Orange) {
+        isOrange = true;
+      } else if (spot instanceof Soap) {
+        isOrange = false;
+      } else if (spot instanceof Water) {
+        if (isOrange) {
+          newPos.sub(dir.copy());
+        }
+      } else if (!spot.walkable) {
+        dir.mult(-1);
+        newPos.add(dir.copy());
+      }
+      loc = newPos.copy();
+      visited[loc.y][loc.x] = true;
+    } while (spot instanceof Soap);
+    return { v:visited, p:loc, o:isOrange };
+  }
+
+
+  /* Method to try and solve the level, returns true or false if solvable or not */
+  solve() {
+    let stack = [];
+    let current = this.playerPos.copy();
+    let visited = [];
+    for (let row = 0; row < this.r; row++) {
+      let r = [];
+      for (let col = 0; col < this.c; col++) {
+        r.push(false);
+      }
+      visited.push(r);
+    }
+    visited[current.y][current.x] = true;
+    let done = false;
+    while (!done) {
+      let allMoves = this.getMoves(visited, current);
+      if (allMoves.length == 0) {
+        if (stack.length == 0) {
+          return false;
+        } else {
+          current = stack.pop().copy();
+        }
+      } else {
+        stack.push(current.copy());
+        let move = random(allMoves);
+        current = current.copy().add(move.copy());
+        visited[current.y][current.x] = true;
+        if (this.grid[current.y][current.x] instanceof Goal) {
+          return true;
+        }
+      }
+    }
   }
 
 }
