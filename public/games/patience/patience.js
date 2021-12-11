@@ -69,3 +69,12 @@ function keyPressed() {
     }
   }
 }
+
+
+
+/**
+* Function to handle screen clicks so mobile users can make moves
+**/
+function mousePressed() {
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IMPLEMENT THIS
+}
