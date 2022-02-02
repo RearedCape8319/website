@@ -23,13 +23,27 @@
     </nav>
 
     <main id="sketch-holder">
-      <div class="leftHalf">
-        
+      <div class="leftHalf" id="gameList">
+
       </div>
       <div class="rightHalf">
-
+        <p>
+          <label for="gameName"> Name: </label>
+          <input id="gameName"></input>
+        </p>
+        <p>
+          <label for="gameTask"> Task: </label>
+          <input id="gameTask"></input>
+        </p>
+        <p>
+          <button onclick="newGame();"> Submit </button>
+        </p>
+        <p>
+          <button onclick="chooseGame();"> Choose </button>
+        </p>
+        <div id="outputZone">
+        </div>
       </div>
-
     </main>
   </body>
 
