@@ -40,11 +40,12 @@ function newGame() {
     return false;
   }
 
-  // If allowed to continue, clear input fields, add choice to array, reshow array
+  // If allowed to continue, clear input fields, add choice to array and database, reshow array
   document.getElementById("gameName").value = "";
   document.getElementById("gameTask").value = "";
   let addition = new gameChoice(name, task);
   choices.push(addition);
+  saveGame(name, task);
   show();
 
   // Return positive output
@@ -111,5 +112,43 @@ Use the P5js setup function to run code when the application is opened
 */
 function setup() {
   noCanvas();
+  getGames();
   show();
+}
+
+
+/*
+Declare a function to get all existing games from database
+*/
+async function getGames() {
+  let options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  };
+  const response = await fetch("/getAllGames", options);
+  const json = await response.json();
+  console.log(json);
+}
+
+
+/*
+Declare a function for storing things on the database
+*/
+async function saveGame(name, task) {
+  let userinput = new gameChoice(name, task)
+  let data = {
+    game: userinput
+  };
+  let options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+  const response = await fetch("/saveGame", options);
+  const json = await response.json();
+  console.log(json);
 }
