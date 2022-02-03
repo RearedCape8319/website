@@ -10,6 +10,9 @@ const server = app.listen(port, () => {
 
 // Allow the app to serve static files to the user
 app.use(express.static("public"));
+app.use(express.json({
+  limit: "1mb"
+}));
 
 // Use this I found online to allow saving to database with no problems
 app.use(function(req, res, next) {
@@ -48,4 +51,48 @@ app.get("/getAllGames", (request, response) => {
     }
     response.json(data);
   });
+});
+
+// Declare a GET request to set all challenges to done=false
+app.get("/openAll", (request, response) => {
+  console.log("Opening all challenges");
+  games.update(
+    { done: true },
+    { $set: { done: false } },
+    { multi: true },
+    (err, num) => {
+      if (err) {
+        response.end();
+        return;
+      }
+      response.json(num);
+    }
+  )
+  games.loadDatabase();
+});
+
+// Declare a POST request to update a record
+app.post("/completed", (request, response) => {
+  console.log("Updating game");
+  let reqID = request.body.query;
+  games.update(
+           { _id: reqID },
+           { $set: { done: true } },
+           {},
+           (err, num) => {
+             response.json(num);
+           });
+  games.loadDatabase();
+});
+
+// Declare a POST request to remove a record
+app.post("/removeRecord", (request, response) => {
+  console.log("Removing record");
+  games.remove(
+    { _id: request.body.id },
+    {},
+    (err, numRemoved) => {}
+  );
+  response.json(request.body);
+  games.loadDatabase();
 });

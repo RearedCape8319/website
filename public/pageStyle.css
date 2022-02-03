@@ -55,9 +55,13 @@ main {
   width: 50%;
   height: inherit;
   float: left;
+  scroll-behavior: auto;
+  overflow-y: auto;
 }
 .rightHalf {
   width: 50%;
   height: inherit;
   float: right;
+  scroll-behavior: auto;
+  overflow-y: auto;
 }
