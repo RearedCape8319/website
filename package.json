@@ -21,6 +21,7 @@
   "homepage": "https://github.com/RearedCape8319/website#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "nedb": "^1.8.0",
     "nodemon": "^2.0.15"
   }
 }
