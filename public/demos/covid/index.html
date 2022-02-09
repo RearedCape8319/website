@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="../../pageStyle.css"/>
+    <link rel='icon' href='../../images/sussybaka.ico' type='image/x-icon'/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js" integrity="sha512-w1Bktzax55ZbjW5Mqjz8+mKz4KqRjEUU35Dpq/ath29yskKqIGwNIHiFNp03m/OiJWDXvdQ1/g6aV+l4PeVO7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+    <title>Covid Test Probabilities</title>
+  </head>
+
+  <body>
+    <header>
+      <h1 class="headH">Covid Test Probabilities</h1>
+    </header>
+
+    <nav>
+      <a class="dullLink" href="./">Refresh</a> <b>||</b>
+      <a href="../../games" class="dullLink">Games</a> <b>||</b>
+      <a href="../" class="dullLink">Back</a>
+    </nav>
+
+    <main id="sketch-holder">
+      <p>
+        <p>
+          <label for="sensitivity">Sensitivity:</label>
+          <input type="text" id="sensitivity" value="76.8"/>%
+        </p>
+        <p>
+          <label for="specificity">Specificity:</label>
+          <input type="text" id="specificity" value="99.68"/>%
+        </p>
+        <p>
+          <label for="prior">Cases per 1 million people:</label>
+          <input type="text" id="prior" value="267469"/>
+        </p>
+        <p>
+          <label for="positive">Positive?</label>
+          <input type="checkbox" id="positive">
+        </p>
+        <p>
+          <button onclick="calculate()">Calculate</button>
+        </p>
+        <p id="output">
+        </p>
+      </p>
+    </main>
+  </body>
+
+</html>
