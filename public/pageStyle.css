@@ -57,6 +57,7 @@ main {
   float: left;
   scroll-behavior: auto;
   overflow-y: auto;
+  /* background-color: red; */
 }
 .rightHalf {
   width: 50%;
@@ -64,4 +65,5 @@ main {
   float: right;
   scroll-behavior: auto;
   overflow-y: auto;
+  /* background-color: blue; */
 }
