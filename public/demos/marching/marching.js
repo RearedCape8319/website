@@ -1,46 +1,52 @@
-/* Declare global variables */
-let res, len;
-let size, offset;
-let nScl, tVal, tInc;
+/**
+Declare global variables for use in the program
+- The noise field
+- Time counter and increment
+**/
+let field;
+let time, tInc;
 
 
 
-/* Setup function to be ran once at program start */
+/**
+Setup function to be ran once at program start
+- Setup screen and settings
+- Initialise global variables
+**/
 function setup() {
   // Setup canvas
   let posinfo = document.getElementById("sketch-holder").getBoundingClientRect();
   let canvas = createCanvas(posinfo.width, posinfo.height);
   canvas.parent("sketch-holder");
   rectMode(CENTER);
-  // colorMode(HSB, 360, 100, 100, 100);
   colorMode(RGB, 255, 255, 255, 255);
 
-  // Initialise global variables
-  res = 60;
-  size = min(width, height) * 0.9;
-  offset = createVector((width-size)/2, (height-size)/2);
-  len = size / res;
-  nScl = 0.008;
-  tVal = 0;
+  // Initialise the noise field
+  let size = min(width, height) * 0.9;
+  let offset = createVector((width-size)/2, (height-size)/2);
+  field = new Field(40, 0.15, offset, size);
+
+  // Initialise time
+  time = 0;
   tInc = 0.005;
 }
 
 
 
-/* Draw function to be ran continuously after setup funciton */
+/**
+Draw function runs continuously after setup
+- Show the noise field
+- Show the marching squares
+- Increment time
+**/
 function draw() {
-  // Draw the noise values
-  noStroke();
-  for (let i = 0; i < res; i++) {
-    for (let j = 0; j < res; j++) {
-      let x = i*len + offset.x;
-      let y = j*len + offset.y;
-      // fill(noise(x, y) * 360, 100, 100);
-      fill(noise(x*nScl, y*nScl, tVal) * 255);
-      rect(x, y, len, len);
-    }
-  }
+  // Show the noise field
+  background(0);
+  field.show(time);
+
+  // Show the marching squares
+  field.march(time);
 
   // Increment time
-  tVal += tInc;
+  time += tInc;
 }
