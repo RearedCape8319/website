@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="../../pageStyle.css"/>
+    <link rel='icon' href='../../images/sussybaka.ico' type='image/x-icon'/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js" integrity="sha512-w1Bktzax55ZbjW5Mqjz8+mKz4KqRjEUU35Dpq/ath29yskKqIGwNIHiFNp03m/OiJWDXvdQ1/g6aV+l4PeVO7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="games.js"></script>
+    <title>Random Games</title>
+  </head>
+
+  <body>
+    <header>
+      <h1 class="headH">Random Games</h1>
+    </header>
+
+    <nav>
+      <a class="dullLink" href="./">Refresh</a> <b>||</b>
+      <a href="../../games" class="dullLink">Games</a> <b>||</b>
+      <a href="../" class="dullLink">Back</a>
+    </nav>
+
+    <main id="sketch-holder">
+      <div class="leftHalf" id="gameList">
+
+      </div>
+      <div class="rightHalf">
+        <p>
+          <label for="gameName"> Name: </label>
+          <input id="gameName"></input>
+        </p>
+        <p>
+          <label for="gameTask"> Task: </label>
+          <input id="gameTask"></input>
+        </p>
+        <p>
+          <button onclick="saveGame();"> Submit </button>
+        </p>
+        <p>
+          <button onclick="chooseGame(false);"> Random </button>
+        </p>
+        <p>
+          <button onclick="chooseGame(true);"> Unbeaten </button>
+        </p>
+        <p>
+          <button onclick="completed();"> Accept </button>
+        </p>
+        <p>
+          <button onclick="removeRecord();"> Remove </button>
+        </p>
+        <p>
+          <button onclick="openAll();"> Open All Challenges </button>
+        </p>
+        <div id="outputZone">
+        </div>
+      </div>
+    </main>
+  </body>
+
+</html>
