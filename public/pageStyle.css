@@ -11,12 +11,14 @@ header {
   background-color: #895575;
   color: #FFFFFF;
   text-shadow: 4px 2px 2px #1E0233;
-  font-size: 30px;
-  height: 10vh;
-  line-height: 10vh;
+  font-size: 18pt;
+  height: auto;
+  line-height: 30pt;
 }
 .headH{
   margin: 0px;
+  padding: 8pt;
+  padding-bottom: 12pt;
 }
 
 
@@ -27,9 +29,9 @@ nav {
   border-top-style: solid;
   border-color: #E7D3CC;
   text-shadow: 3px 1px 1px #1E0233;
-  font-size: 22px;
-  height: 5vh;
-  line-height: 5vh;
+  font-size: 16pt;
+  height: auto;
+  line-height: 34pt;
 }
 .dullLink {
   color: inherit;
@@ -45,8 +47,8 @@ main {
   width: auto;
   height: 80vh;
   margin: 0;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 14pt;
+  line-height: 28px;
 }
 
 
