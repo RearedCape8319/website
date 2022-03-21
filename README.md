@@ -74,3 +74,6 @@ Draw any given path as an approximation using connected circles of varying frequ
 The algorithm uses a single integral of complex number rotation to calculate the size and frequency offset of a circle of given frequency. I connected circled of frequencies 0, 1, -1, 2, -2, ... n, -n together, where the current rotation within the circle, which can be thought of as a single clock hand along the circumference of the circle, pointing to the center of the next circle.
 
 I hardcoded three paths, a square, a heart, and a secret pattern, and over time more circles are drawn to the screen and the resulting path is drawn in a thicker rainbow stroke.
+
+## _Pythagoras Tree Fractal_
+This fractal tree is formed by starting with a square, drawing a right angled triangle on top of it, and using the two non-hypotenuse sides of this triangle as bases of new squares. The process then repeats recursively to make a tree-looking pattern.
