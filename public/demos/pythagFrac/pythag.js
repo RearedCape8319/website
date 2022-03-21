@@ -45,31 +45,3 @@ function draw() {
     aInc *= -1;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// PLACEHOLDER
