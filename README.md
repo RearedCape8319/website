@@ -77,3 +77,9 @@ I hardcoded three paths, a square, a heart, and a secret pattern, and over time 
 
 ## _Pythagoras Tree Fractal_
 This fractal tree is formed by starting with a square, drawing a right angled triangle on top of it, and using the two non-hypotenuse sides of this triangle as bases of new squares. The process then repeats recursively to make a tree-looking pattern.
+
+## _Lorenz Attractor_
+This demo shows off a well known model of mathematical chaos. Multiple points that sit very close together in 3D space are acted upon by the same set of differential equations. Their motions are initially very similar however as some time passes their motions are wildly different. The demo allows a path to be drawn behind each point to show the shape of the attractor system.
+
+## _3D Supershape_
+Here we define a sphere using 3D polar co-ordinates (spherical co-ordinates), and vary the "radius" of each point according to some function. The demo changes one of the variables within this function over time to allow an animation to be shown.
