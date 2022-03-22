@@ -144,7 +144,7 @@ function getSquare() {
     createVector(len, len),
     createVector(len, -len),
   ];
-  for (let i = 1; i < corners.length; i++) {
+  for (let i = 0; i < corners.length; i++) {
     for (let j = 0; j < 1; j += 0.01) {
       let x = lerp(corners[i%corners.length].x, corners[(i+1)%corners.length].x, j);
       let y = lerp(corners[i%corners.length].y, corners[(i+1)%corners.length].y, j);
