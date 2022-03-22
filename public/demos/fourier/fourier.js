@@ -93,6 +93,7 @@ function draw() {
 
   // Say how many circles are showing
   fill(360);
+  noStroke();
   textSize(30);
   let s = "Number of circles: " + str((maxFreq*2)+1);
   text(s, -width/2 + 40, -height/2 + 80);

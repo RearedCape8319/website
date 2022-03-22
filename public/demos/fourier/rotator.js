@@ -34,8 +34,8 @@ class Rotator {
   // Method to show the vector to the screen with a given time, 0<=t<=1
   show(t) {
     let len = this.scalar.Mod();
-    stroke(360, 20);
-    strokeWeight(2);
+    stroke(360, 60);
+    strokeWeight(1);
     noFill();
     ellipse(this.center.re, this.center.im, len*2, len*2);
     let tail = this.value(t);
