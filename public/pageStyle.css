@@ -1,8 +1,13 @@
+html {
+  height: 100%;
+}
+
 /* Body will simply be a dark background */
 body {
   background-color: #1E0233;
   text-align: center;
-  height: 95vh;
+  height: 75%;
+  overscroll-behavior-y: contain;
 }
 
 
@@ -11,7 +16,7 @@ header {
   background-color: #895575;
   color: #FFFFFF;
   text-shadow: 4px 2px 2px #1E0233;
-  font-size: 18pt;
+  font-size: 17pt;
   height: auto;
   line-height: 30pt;
 }
@@ -45,7 +50,7 @@ main {
   border-top-style: solid;
   border-color: #E7D3CC;
   width: auto;
-  height: 80vh;
+  height: 100%;
   margin: 0;
   font-size: 14pt;
   line-height: 28px;
