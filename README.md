@@ -83,3 +83,6 @@ This demo shows off a well known model of mathematical chaos. Multiple points th
 
 ## _3D Supershape_
 Here we define a sphere using 3D polar co-ordinates (spherical co-ordinates), and vary the "radius" of each point according to some function. The demo changes one of the variables within this function over time to allow an animation to be shown.
+
+## _Inverse Kinematics_
+This demo creates a snake-like system that consists of multiple line segments. One will follow the mouse location, the next segment will follow the previous one, until the "tail" is reached and nothing will follow that segment. There is a button that can be clicked to allow the tail location to be fixed, creating the illusion that the head will reach for something that is out of range rather than follow something it is attached to.
