@@ -22,7 +22,11 @@ class Segment {
   // Method to show the segment to the screen
   show(i, total) {
     stroke(map(float(i)/total, 0, 1, 0, 360), 100, 100);
-    strokeWeight(map(float(i)/total, 0, 1, 15, 1));
+    if (!arm) {
+      strokeWeight(map(float(i)/total, 0, 1, 20, 1));
+    } else {
+      strokeWeight(4);
+    }
     let end = this.calculateEnd();
     line(this.start.x, this.start.y, end.x, end.y);
     if (this.child != null) {
