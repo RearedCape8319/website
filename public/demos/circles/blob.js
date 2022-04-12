@@ -12,7 +12,7 @@ class Blob {
   constructor(p, c) {
     this.position = p.copy();
     this.colour = c;
-    this.radius = 2;
+    this.radius = 1;
     this.growing = true;
   }
 
@@ -54,7 +54,9 @@ class Blob {
   show() {
     noStroke();
     fill(this.colour);
-    ellipse(this.position.x, this.position.y, this.radius*2);
+    let pos = this.position.copy();
+    pos.add(catOffset);
+    ellipse(pos.x, pos.y, this.radius*2);
   }
 
 }

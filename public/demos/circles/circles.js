@@ -35,8 +35,8 @@ function setup() {
   canvas.parent("sketch-holder");
 
   // Setup graphic settings
-  // colorMode(HSB, 360, 100, 100, 100);
-  colorMode(RGB, 255, 255, 255, 100);
+  colorMode(HSB, 360, 100, 100, 100);
+  // colorMode(RGB, 255, 255, 255, 100);
   ellipseMode(CENTER);
   rectMode(CORNER);
 
@@ -61,8 +61,8 @@ function setup() {
 
   // Initialise circles
   maxAttempts = 50;
-  maxCircles = 2000;
-  circleCount = 100;
+  maxCircles = 3000;
+  circleCount = 150;
   circles = [];
   for (let i = 0; i < circleCount; i++) {
     createCircle();
@@ -90,11 +90,15 @@ function draw() {
 
   // Stop animating
   if (circles.length >= maxCircles) {
-    noLoop();
     console.log("Too many circles");
+    noLoop();
   }
 
   // image(catImg, catOffset.x, catOffset.y);
+  if (frameRate() <= 0.5 && frameCount > 10) {
+    console.log("Too slow");
+    noLoop();
+  }
 }
 
 
@@ -123,9 +127,9 @@ function createCircle() {
       return;
     }
   }
-  // let c = noiseField[floor(pos.y/nSize)][floor(pos.x/nSize)];
-  // c = color(map(c, 0, 1, 0, 360), 100, 100);
-  let c = catImg.get(pos.x, pos.y);
-  pos.add(catOffset);
+  let c = noiseField[floor(pos.y/nSize)][floor(pos.x/nSize)];
+  c *= 360;
+  c = color(c, 100, 100);
+  // let c = catImg.get(pos.x, pos.y);
   circles.push(new Blob(pos.copy(), c));
 }
